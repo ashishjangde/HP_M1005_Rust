@@ -49,7 +49,6 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         appMenu.addItem(withTitle: "Quit HP M1005 Scan", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         root.submenu = appMenu
         NSApp.mainMenu = menu
-        NSApp.applicationIconImage = NSImage(systemSymbolName: "scanner", accessibilityDescription: "Scanner")
 
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 760, height: 800),
                           styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
@@ -172,8 +171,9 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         applyPreset()
         updateControls()
-        window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
     }
 
     @objc private func applyPreset() {
@@ -527,6 +527,11 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag { window.makeKeyAndOrderFront(nil) }
+        NSApp.activate(ignoringOtherApps: true)
+        return true
+    }
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         if process != nil { quitting = true; cancel(); return .terminateLater }
         if let workspace { try? FileManager.default.removeItem(at: workspace) }

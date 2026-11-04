@@ -3,7 +3,7 @@
 ## Download and use
 
 **Apple Silicon Mac (M-series), macOS 13 or later.** Download the ready-made
-[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.1/HP_M1005_Rust-0.3.1-macos-arm64.pkg)
+[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.2/HP_M1005_Rust-0.3.2-macos-arm64.pkg)
 or visit the [latest release](https://github.com/ashishjangde/HP_M1005_Rust/releases/latest).
 You do not need Rust, Xcode or Homebrew to use the download.
 
