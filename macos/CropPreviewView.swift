@@ -1,12 +1,56 @@
 import AppKit
 
 final class CropPreviewView: NSView {
-    var image: CGImage? { didSet { selection = .zero; needsDisplay = true } }
+    var image: CGImage? {
+        didSet {
+            selection = .zero
+            hint.isHidden = image != nil
+            selectionLayer.path = nil
+            needsDisplay = true
+        }
+    }
     private(set) var selection = CGRect.zero { didSet { onSelectionChanged?(selection) } }
     var onSelectionChanged: ((CGRect) -> Void)?
     private var dragOrigin: CGPoint?
+    private let hint = NSTextField(labelWithString: "Your scan preview will appear here")
+    private let selectionLayer = CAShapeLayer()
 
     override var isFlipped: Bool { false }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        configurePreview()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configurePreview()
+    }
+
+    private func configurePreview() {
+        wantsLayer = true
+        hint.textColor = .secondaryLabelColor
+        hint.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(hint)
+        NSLayoutConstraint.activate([
+            hint.centerXAnchor.constraint(equalTo: centerXAnchor),
+            hint.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+        selectionLayer.fillColor = NSColor.systemBlue.withAlphaComponent(0.2).cgColor
+        selectionLayer.strokeColor = NSColor.systemBlue.cgColor
+        selectionLayer.lineWidth = 2
+        layer?.addSublayer(selectionLayer)
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if selectionLayer.superlayer == nil { layer?.addSublayer(selectionLayer) }
+    }
+
+    override func layout() {
+        super.layout()
+        selectionLayer.frame = bounds
+    }
 
     private var imageRect: CGRect {
         guard let image, bounds.width > 0, bounds.height > 0 else { return .zero }
@@ -18,25 +62,16 @@ final class CropPreviewView: NSView {
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        NSColor.windowBackgroundColor.setFill()
-        dirtyRect.fill()
-        guard let image else {
-            let hint = NSAttributedString(string: "Your scan preview will appear here", attributes: [
-                .font: NSFont.systemFont(ofSize: 14), .foregroundColor: NSColor.secondaryLabelColor
-            ])
-            hint.draw(at: CGPoint(x: bounds.midX - hint.size().width / 2, y: bounds.midY - hint.size().height / 2))
-            return
+        selectionLayer.frame = bounds
+        if let image {
+            NSGraphicsContext.saveGraphicsState()
+            if let context = NSGraphicsContext.current?.cgContext {
+                context.interpolationQuality = .high
+                context.draw(image, in: imageRect)
+            }
+            NSGraphicsContext.restoreGraphicsState()
         }
-        let rect = imageRect
-        NSImage(cgImage: image, size: NSSize(width: image.width, height: image.height)).draw(in: rect)
-        if !selection.isEmpty {
-            NSColor.systemBlue.withAlphaComponent(0.2).setFill()
-            selection.fill()
-            NSColor.systemBlue.setStroke()
-            let border = NSBezierPath(rect: selection)
-            border.lineWidth = 2
-            border.stroke()
-        }
+        updateSelectionLayer()
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -45,7 +80,7 @@ final class CropPreviewView: NSView {
         guard imageRect.contains(point) else { return }
         dragOrigin = point
         selection = CGRect(origin: point, size: .zero)
-        needsDisplay = true
+        updateSelectionLayer()
     }
 
     override func mouseDragged(with event: NSEvent) {
@@ -53,7 +88,7 @@ final class CropPreviewView: NSView {
         let point = clamped(convert(event.locationInWindow, from: nil))
         selection = CGRect(x: min(dragOrigin.x, point.x), y: min(dragOrigin.y, point.y),
                            width: abs(point.x - dragOrigin.x), height: abs(point.y - dragOrigin.y))
-        needsDisplay = true
+        updateSelectionLayer()
     }
 
     override func mouseUp(with event: NSEvent) {
@@ -61,7 +96,7 @@ final class CropPreviewView: NSView {
         dragOrigin = nil
     }
 
-    func clearSelection() { selection = .zero; needsDisplay = true }
+    func clearSelection() { selection = .zero; updateSelectionLayer() }
 
     func pixelCropRect() -> CGRect? {
         guard let image, selection.width >= 12, selection.height >= 12 else { return nil }
@@ -78,5 +113,9 @@ final class CropPreviewView: NSView {
         let rect = imageRect
         return CGPoint(x: min(max(point.x, rect.minX), rect.maxX),
                        y: min(max(point.y, rect.minY), rect.maxY))
+    }
+
+    private func updateSelectionLayer() {
+        selectionLayer.path = selection.isEmpty ? nil : CGPath(rect: selection, transform: nil)
     }
 }

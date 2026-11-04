@@ -60,5 +60,11 @@ PACKAGE="HP_M1005_Rust-$VERSION-macos-arm64.pkg"
   --package-path "$BUILD" "$DIST/$PACKAGE"
 /usr/bin/ditto -c -k --norsrc --noextattr --noacl --keepParent "$PAYLOAD/Applications/HP M1005 Scan.app" \
   "$DIST/HP_M1005_Scan-$VERSION-macos-arm64.zip"
+mkdir -p "$BUILD/dmg/Applications"
+/usr/bin/ditto --norsrc --noextattr --noacl "$PAYLOAD/Applications/HP M1005 Scan.app" \
+  "$BUILD/dmg/HP M1005 Scan.app"
+/bin/ln -s /Applications "$BUILD/dmg/Applications/Applications"
+/usr/bin/hdiutil create -quiet -volname "HP M1005 Scan" -srcfolder "$BUILD/dmg" \
+  -ov -format UDZO "$DIST/HP_M1005_Scan-$VERSION-macos-arm64.dmg"
 /bin/rm -rf "$ROOT/output/HP M1005 Scan.app"
 print "Release binaries built in $DIST"

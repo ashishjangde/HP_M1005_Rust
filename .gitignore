@@ -1,5 +1,6 @@
 /target/
 /output/
+HP_M1005_Rust.xcodeproj/xcuserdata/
 macos/Assets.xcassets/AppIcon.appiconset/icon_*.png
 .DS_Store
 __pycache__/

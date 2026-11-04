@@ -50,12 +50,12 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         root.submenu = appMenu
         NSApp.mainMenu = menu
 
-        window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 760, height: 800),
+        window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 760, height: 850),
                           styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
         window.title = "HP M1005 Scan"
         window.delegate = self
         window.isReleasedWhenClosed = false
-        window.minSize = NSSize(width: 650, height: 690)
+        window.minSize = NSSize(width: 650, height: 700)
         window.center()
 
         let stack = NSStackView()
@@ -136,10 +136,8 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         preview.layer?.cornerRadius = 8
         preview.layer?.borderWidth = 1
         preview.layer?.borderColor = NSColor.separatorColor.cgColor
-        preview.heightAnchor.constraint(equalToConstant: 240).isActive = true
-        preview.widthAnchor.constraint(equalTo: stack.widthAnchor).isActive = true
+        preview.heightAnchor.constraint(equalToConstant: 220).isActive = true
         preview.onSelectionChanged = { [weak self] rect in self?.cropButton.isEnabled = !rect.isEmpty && self?.currentImage != nil }
-        stack.addArrangedSubview(preview)
 
         let editRow = NSStackView()
         editRow.spacing = 8
@@ -181,9 +179,22 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         openButton.action = #selector(openScan)
         revealButton.action = #selector(revealScan)
         stack.addArrangedSubview(results)
+        stack.addArrangedSubview(preview)
+        preview.widthAnchor.constraint(equalTo: stack.widthAnchor).isActive = true
 
         applyPreset()
         updateControls()
+#if DEBUG
+        if let argumentIndex = ProcessInfo.processInfo.arguments.firstIndex(of: "--preview-image"),
+           ProcessInfo.processInfo.arguments.indices.contains(argumentIndex + 1),
+           let image = try? ScanDocument.loadImage(URL(fileURLWithPath: ProcessInfo.processInfo.arguments[argumentIndex + 1])) {
+            originalImage = image
+            currentImage = image
+            preview.image = image
+            status.stringValue = "Development preview loaded. Drag over the image to test crop selection."
+            updateControls()
+        }
+#endif
         NSApp.activate(ignoringOtherApps: true)
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
@@ -308,6 +319,7 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 self.process = nil
                 self.progress.stopAnimation(nil)
                 self.progress.isIndeterminate = false
+                self.progress.doubleValue = 0
                 if completed.terminationStatus == 0 {
                     do {
                         let image = try ScanDocument.loadImage(destination)
@@ -321,10 +333,15 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 } else {
                     let details = self.diagnostics.trimmingCharacters(in: .whitespacesAndNewlines)
                     let canceled = details.localizedCaseInsensitiveContains("scan canceled")
+                    if self.pages.isEmpty {
+                        if let workspace = self.workspace { try? FileManager.default.removeItem(at: workspace) }
+                        self.workspace = nil
+                        self.outputURL = nil
+                    }
                     self.status.stringValue = canceled
                         ? "Scan canceled. Your previously added PDF pages are kept."
                         : self.friendlyError(for: details)
-                    if !canceled { self.showError(self.friendlyError(for: details), details: details) }
+                    if !canceled { self.showError(self.friendlyError(for: details), details: self.conciseDetails(from: details)) }
                 }
                 self.updateControls()
                 if self.quitting && self.process == nil { NSApp.reply(toApplicationShouldTerminate: true) }
@@ -374,6 +391,20 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
             return "The scanner sent incomplete image data. Check the USB connection and retry at a lower resolution."
         }
         return "Scanning failed. Check the printer's USB connection and power, then try again."
+    }
+
+    private func conciseDetails(from diagnostics: String) -> String {
+        let lines = diagnostics.split(whereSeparator: \.isNewline).map(String.init)
+        if let error = lines.last(where: { $0.localizedCaseInsensitiveContains("error:") }) {
+            return error.replacingOccurrences(of: "ERROR: M1005 Rust: ", with: "")
+        }
+        if let useful = lines.last(where: {
+            let line = $0.lowercased()
+            return line.contains("usb") || line.contains("iokit") || line.contains("scanner")
+        }) {
+            return useful
+        }
+        return String(lines.suffix(2).joined(separator: "\n").prefix(500))
     }
 
     @objc private func cropSelection() {

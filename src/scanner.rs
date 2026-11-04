@@ -243,27 +243,40 @@ impl Planes {
         if self.width == 0 {
             return Err("scanner returned no image data".into());
         }
-        let expected = self.stride as usize * self.height as usize;
+        let stride = self.stride as usize;
+        let expected_rows = self.height as usize;
+        let mut image_rows = expected_rows;
         for plane in &self.data[..channels] {
-            if plane.len() < expected {
+            if plane.len() % stride != 0 {
                 return Err(format!(
-                    "incomplete scan: {} of {expected} bytes in a color plane",
-                    plane.len()
+                    "incomplete scan: {} bytes do not end on a complete image row",
+                    plane.len() % stride
                 )
                 .into());
             }
+            image_rows = image_rows.min(plane.len() / stride);
         }
-        let mut pixels = Vec::with_capacity(self.width as usize * self.height as usize * channels);
-        for y in 0..self.height as usize {
+        let missing_rows = expected_rows.saturating_sub(image_rows);
+        let tolerated_missing_rows = expected_rows / 100;
+        if image_rows == 0 || missing_rows > tolerated_missing_rows {
+            let received = image_rows * stride;
+            let expected = expected_rows * stride;
+            return Err(format!(
+                "incomplete scan: {received} of {expected} bytes in a color plane"
+            )
+            .into());
+        }
+        let mut pixels = Vec::with_capacity(self.width as usize * image_rows * channels);
+        for y in 0..image_rows {
             for x in 0..self.width as usize {
                 for plane in &self.data[..channels] {
-                    pixels.push(plane[y * self.stride as usize + x]);
+                    pixels.push(plane[y * stride + x]);
                 }
             }
         }
         Ok(Image {
             width: self.width,
-            height: self.height,
+            height: image_rows as u32,
             channels: channels as u32,
             pixels,
         })

@@ -3,7 +3,7 @@
 ## Download and use
 
 **Apple Silicon Mac (M-series), macOS 13 or later.** Download the ready-made
-[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.3/HP_M1005_Rust-0.3.3-macos-arm64.pkg)
+[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.4/HP_M1005_Rust-0.3.4-macos-arm64.pkg)
 or visit the [latest release](https://github.com/ashishjangde/HP_M1005_Rust/releases/latest).
 You do not need Rust, Xcode or Homebrew to use the download.
 
@@ -18,8 +18,8 @@ specific installer or app if you choose to trust it. See [Apple's instructions](
 The downloads include checksums and corresponding GPL source. Hardware testing
 was on macOS 27.0.1; the binaries target macOS 13+, with earlier versions unverified.
 
-For the scanner app alone, download the ZIP from the release and move the extracted
-**HP M1005 Scan.app** to Applications. Intel Macs are not supported by these release binaries.
+For the scanner app alone, download the DMG and drag **HP M1005 Scan.app** to
+Applications (or use the ZIP). Intel Macs are not supported by these release binaries.
 
 ## Project
 
@@ -72,6 +72,16 @@ sudo /bin/zsh scripts/install-scan-app.sh
 Installation copies only this app bundle into `/Applications/HP M1005 Scan.app`.
 Normal scanning requires no administrator password. Remove the Scan app through
 Finder if you no longer need it; printing has a separate installer/uninstaller.
+
+### Develop the scanner UI in Xcode
+
+Open `HP_M1005_Rust.xcodeproj`, select **HP M1005 Scan Dev**, then press **⌘R**.
+Xcode builds a separate debug app and Rust scanner resource; it does not install
+over the release app. UI edits can be rebuilt and relaunched directly from Xcode.
+AppKit does not hot-reload source changes while the app is running, so press **⌘R**
+after editing. For preview and crop UI work, pass `--preview-image` followed by a PNG
+path in **Product → Scheme → Edit Scheme → Run → Arguments**. This development-only
+argument loads a local image without starting a USB scan.
 
 Command-line single-page scanning is also available:
 

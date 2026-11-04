@@ -1,11 +1,20 @@
-# v0.3.3 — Keep scanner actions visible
+# v0.3.4 — Accept scanner edge margins and simplify errors
 
-The scan action was below the oversized preview area in some window layouts. Scan and
-Cancel now appear near the settings, and the preview has a fixed height so the editing,
-page, and save controls remain reachable in the window.
+The M1005 can finish a scan a few rows before the exact requested A4 height. Scans
+that are short by less than 1% now keep the complete rows received and trim only the
+unavailable bottom edge. Larger or malformed transfers still fail safely.
 
-The Scan button opens the destination picker first, then starts the USB scan. Status,
-progress, cancellation, and scanner error guidance remain visible while a scan runs.
+Scanner alerts now show a concise failure detail instead of the entire progress log.
+If the first page fails, the app clears that unfinished session so resolution and
+preset settings can be changed before retrying. Multi-page sessions keep pages already
+added to the PDF.
+
+Page previews draw directly into the native preview canvas with a separate crop
+selection overlay. The Xcode sample-image launch mode makes preview and crop UI easy
+to exercise without starting a USB scan. The progress bar resets when a scan finishes.
+
+The Scan and Cancel buttons stay near the settings, and the preview size is bounded
+so edit and save controls remain reachable.
 
 ## Scanner features
 
@@ -28,14 +37,12 @@ notarized. If Gatekeeper blocks an app you trust, approve it under
 
 ## Downloads
 
-- `HP_M1005_Rust-0.3.3-macos-arm64.pkg`: printer driver and scanner app installer.
-- `HP_M1005_Scan-0.3.3-macos-arm64.zip`: scanner app by itself.
-- `HP_M1005_Rust-0.3.3-source.tar.gz`: source from the matching release tag.
+- `HP_M1005_Rust-0.3.4-macos-arm64.pkg`: printer driver and scanner app installer.
+- `HP_M1005_Scan-0.3.4-macos-arm64.dmg`: drag-to-Applications scanner app installer.
+- `HP_M1005_Scan-0.3.4-macos-arm64.zip`: scanner app by itself.
+- `HP_M1005_Rust-0.3.4-source.tar.gz`: source from the matching release tag.
 - `SHA256SUMS.txt`: SHA-256 checksums for the release downloads.
 
-The app and installer build on Apple Silicon. Multi-page PDF, crop, deskew, and OCR
-features are available; physical hardware verification remains documented in the
-project README. This independent community driver is not HP-supported software.
-
-GPL-2.0-or-later. Keep corresponding source and license notices with any
-redistribution. See [README.md](README.md) for build and removal instructions.
+This independent community driver is not HP-supported software. GPL-2.0-or-later;
+keep corresponding source and license notices with any redistribution. See
+[README.md](README.md) for build and removal instructions.

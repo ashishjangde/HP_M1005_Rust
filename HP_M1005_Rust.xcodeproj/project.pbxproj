@@ -1,0 +1,108 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 60;
+	objects = {
+/* Begin PBXBuildFile section */
+		300000000000000000000001 /* ScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310000000000000000000001 /* ScanApp.swift */; };
+		300000000000000000000002 /* CropPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310000000000000000000002 /* CropPreviewView.swift */; };
+		300000000000000000000003 /* ScanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310000000000000000000003 /* ScanDocument.swift */; };
+		300000000000000000000004 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310000000000000000000004 /* main.swift */; };
+		300000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 310000000000000000000005 /* Assets.xcassets */; };
+		300000000000000000000006 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310000000000000000000006 /* AppKit.framework */; };
+		300000000000000000000007 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310000000000000000000007 /* UniformTypeIdentifiers.framework */; };
+		300000000000000000000008 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310000000000000000000008 /* Vision.framework */; };
+		300000000000000000000009 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310000000000000000000009 /* CoreImage.framework */; };
+		30000000000000000000000A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31000000000000000000000A /* CoreText.framework */; };
+		30000000000000000000000B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31000000000000000000000B /* ImageIO.framework */; };
+/* End PBXBuildFile section */
+/* Begin PBXFileReference section */
+		310000000000000000000001 /* ScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanApp.swift; sourceTree = "<group>"; };
+		310000000000000000000002 /* CropPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropPreviewView.swift; sourceTree = "<group>"; };
+		310000000000000000000003 /* ScanDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDocument.swift; sourceTree = "<group>"; };
+		310000000000000000000004 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		310000000000000000000005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		310000000000000000000006 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		310000000000000000000007 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		310000000000000000000008 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
+		310000000000000000000009 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		31000000000000000000000A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		31000000000000000000000B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		31000000000000000000000C /* HP M1005 Scan Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HP M1005 Scan Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+/* Begin PBXFrameworksBuildPhase section */
+		500000000000000000000002 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
+			300000000000000000000006 /* AppKit.framework in Frameworks */,
+			300000000000000000000007 /* UniformTypeIdentifiers.framework in Frameworks */,
+			300000000000000000000008 /* Vision.framework in Frameworks */,
+			300000000000000000000009 /* CoreImage.framework in Frameworks */,
+			30000000000000000000000A /* CoreText.framework in Frameworks */,
+			30000000000000000000000B /* ImageIO.framework in Frameworks */,
+		); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+/* Begin PBXGroup section */
+		400000000000000000000001 = {isa = PBXGroup; children = (
+			400000000000000000000002 /* macos */,
+			400000000000000000000003 /* Frameworks */,
+			400000000000000000000004 /* Products */,
+		); sourceTree = "<group>"; };
+		400000000000000000000002 /* macos */ = {isa = PBXGroup; path = macos; sourceTree = "<group>"; children = (
+			310000000000000000000001 /* ScanApp.swift */,
+			310000000000000000000002 /* CropPreviewView.swift */,
+			310000000000000000000003 /* ScanDocument.swift */,
+			310000000000000000000004 /* main.swift */,
+			310000000000000000000005 /* Assets.xcassets */,
+		); };
+		400000000000000000000003 /* Frameworks */ = {isa = PBXGroup; children = (
+			310000000000000000000006 /* AppKit.framework */,
+			310000000000000000000007 /* UniformTypeIdentifiers.framework */,
+			310000000000000000000008 /* Vision.framework */,
+			310000000000000000000009 /* CoreImage.framework */,
+			31000000000000000000000A /* CoreText.framework */,
+			31000000000000000000000B /* ImageIO.framework */,
+		); sourceTree = "<group>"; };
+		400000000000000000000004 /* Products */ = {isa = PBXGroup; children = (
+			31000000000000000000000C /* HP M1005 Scan Dev.app */,
+		); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+/* Begin PBXNativeTarget section */
+		600000000000000000000001 /* HP M1005 Scan Dev */ = {isa = PBXNativeTarget; buildConfigurationList = 620000000000000000000002; buildPhases = (
+			500000000000000000000004 /* Build Rust scanner resource */,
+			500000000000000000000001 /* Sources */,
+			500000000000000000000002 /* Frameworks */,
+			500000000000000000000003 /* Resources */,
+		); buildRules = (); dependencies = (); name = "HP M1005 Scan Dev"; productName = "HP M1005 Scan Dev"; productReference = 31000000000000000000000C /* HP M1005 Scan Dev.app */; productType = "com.apple.product-type.application"; };
+/* End PBXNativeTarget section */
+/* Begin PBXProject section */
+		610000000000000000000001 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 2700; TargetAttributes = {600000000000000000000001 = {CreatedOnToolsVersion = 27.0; }; }; }; buildConfigurationList = 620000000000000000000001; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base,); mainGroup = 400000000000000000000001; productRefGroup = 400000000000000000000004; projectDirPath = ""; projectRoot = ""; targets = (600000000000000000000001 /* HP M1005 Scan Dev */,); };
+/* End PBXProject section */
+/* Begin PBXResourcesBuildPhase section */
+		500000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
+			300000000000000000000005 /* Assets.xcassets in Resources */,
+		); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+/* Begin PBXSourcesBuildPhase section */
+		500000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+			300000000000000000000001 /* ScanApp.swift in Sources */,
+			300000000000000000000002 /* CropPreviewView.swift in Sources */,
+			300000000000000000000003 /* ScanDocument.swift in Sources */,
+			300000000000000000000004 /* main.swift in Sources */,
+		); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+/* Begin PBXShellScriptBuildPhase section */
+		500000000000000000000004 /* Prepare Xcode app resources */ = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = ("$(SRCROOT)/Cargo.toml", "$(SRCROOT)/src/scanner.rs", "$(SRCROOT)/native/scanner.c", "$(SRCROOT)/scripts/build-app-icon.swift", "$(SRCROOT)/artwork/hp-m1005-scan-icon.png",); outputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/m1005",); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/zsh; shellScript = "set -euo pipefail\nROOT=\"$SRCROOT\"\ncd \"$ROOT\"\ncargo build --manifest-path \"$ROOT/Cargo.toml\"\nRES_DIR=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\nmkdir -p \"$RES_DIR\"\ninstall -m 755 \"$ROOT/target/debug/m1005\" \"$RES_DIR/m1005\"\n/usr/bin/codesign --force --sign - \"$RES_DIR/m1005\"\nswift -module-cache-path \"$ROOT/output/swift-cache\" \"$ROOT/scripts/build-app-icon.swift\" \"$ROOT/artwork/hp-m1005-scan-icon.png\" \"$ROOT/macos/Assets.xcassets/AppIcon.appiconset\"\n"; };
+/* End PBXShellScriptBuildPhase section */
+/* Begin XCBuildConfiguration section */
+		630000000000000000000001 /* Project Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 13.0; SDKROOT = macosx; SWIFT_VERSION = 5.0; }; name = Debug; };
+		630000000000000000000002 /* Project Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 13.0; SDKROOT = macosx; SWIFT_VERSION = 5.0; }; name = Release; };
+		630000000000000000000003 /* Target Debug */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = macos/Info-Debug.plist; MACOSX_DEPLOYMENT_TARGET = 13.0; PRODUCT_BUNDLE_IDENTIFIER = local.m1005rust.scan.dev; PRODUCT_NAME = "HP M1005 Scan Dev"; EXECUTABLE_NAME = "m1005-scan"; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_VERSION = 5.0; }; name = Debug; };
+		630000000000000000000004 /* Target Release */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = macos/Info.plist; MACOSX_DEPLOYMENT_TARGET = 13.0; PRODUCT_BUNDLE_IDENTIFIER = local.m1005rust.scan; PRODUCT_NAME = "HP M1005 Scan"; EXECUTABLE_NAME = "m1005-scan"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; }; name = Release; };
+/* End XCBuildConfiguration section */
+/* Begin XCConfigurationList section */
+		620000000000000000000001 /* Project configuration list */ = {isa = XCConfigurationList; buildConfigurations = (630000000000000000000001 /* Project Debug */, 630000000000000000000002 /* Project Release */,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		620000000000000000000002 /* Target configuration list */ = {isa = XCConfigurationList; buildConfigurations = (630000000000000000000003 /* Target Debug */, 630000000000000000000004 /* Target Release */,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = 610000000000000000000001 /* Project object */;
+}
