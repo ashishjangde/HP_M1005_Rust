@@ -52,7 +52,7 @@ with tempfile.TemporaryDirectory(prefix="m1005-release-") as folder:
     payload = next(unpacked.rglob("Payload"))
     app = payload / "Applications/HP M1005 Scan.app"
     driver = payload / "Library/Printers/M1005Rust"
-    for binary in [app / "Contents/MacOS/HP M1005 Scan", app / "Contents/Resources/m1005",
+    for binary in [app / "Contents/MacOS/m1005-scan", app / "Contents/Resources/m1005",
                    driver / "filter/rastertom1005", driver / "bin/m1005"]:
         check_binary(binary)
     run("/usr/bin/codesign", "--verify", "--deep", app)

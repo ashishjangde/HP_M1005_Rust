@@ -219,8 +219,8 @@ The original repository bootstrap's Apache 2.0 license text is retained in
 ## Build a release
 
 On Apple Silicon, run `/bin/zsh scripts/build-release.sh`. This builds the combined
-`.pkg` and scanner-only ZIP in `output/releases/<version>/`, targeting macOS 13.
+`.pkg`, scanner-only DMG and ZIP in `output/releases/<version>/`, targeting macOS 13.
 Run `python3 tests/verify_release.py` to inspect the installer payload, signatures,
-deployment targets and scanner ZIP before publishing. The release must also include
+deployment targets and scanner archives before publishing. The release must also include
 a corresponding source archive from the exact tagged commit and SHA-256 checksums.
 Read [RELEASE_NOTES.md](RELEASE_NOTES.md) for user installation instructions and limitations.
