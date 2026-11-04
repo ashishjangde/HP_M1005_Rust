@@ -1,5 +1,28 @@
 # HP LaserJet M1005 native Rust printing and scanning for macOS
 
+## Download and use
+
+**Apple Silicon Mac (M-series), macOS 13 or later.** Download the ready-made
+[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.2.0/HP_M1005_Rust-0.2.0-macos-arm64.pkg)
+or visit the [latest release](https://github.com/ashishjangde/HP_M1005_Rust/releases/latest).
+You do not need Rust, Xcode or Homebrew to use the download.
+
+1. Connect and power on the USB printer.
+2. Open the `.pkg` file and finish the installer with your Mac administrator password.
+3. Print with **Command-P → HP LaserJet M1005 (Rust)**.
+4. Open **HP M1005 Scan** from Applications or Spotlight to scan to PDF or PNG.
+
+This community release is **unsigned and not Apple-notarized**. If macOS blocks the
+download, use **System Settings → Privacy & Security → Open Anyway** for that
+specific installer or app if you choose to trust it. See [Apple's instructions](https://support.apple.com/en-gb/102445).
+The downloads include checksums and corresponding GPL source. Hardware testing
+was on macOS 27.0.1; the binaries target macOS 13+, with earlier versions unverified.
+
+For the scanner app alone, download the ZIP from the release and move the extracted
+**HP M1005 Scan.app** to Applications. Intel Macs are not supported by these release binaries.
+
+## Project
+
 A custom CUPS raster filter for the USB HP LaserJet M1005 MFP. The driver and XQX
 framing are Rust; the bundled JBIG compression library and a small CUPS ABI bridge
 are C. Everything compiles natively for Apple Silicon, with no Rosetta, Ghostscript,
@@ -98,6 +121,10 @@ To remove the queue and its files:
 sudo /bin/zsh scripts/uninstall.sh
 ```
 
+For the downloaded installer, the same printer uninstaller is available at
+`/Library/Printers/M1005Rust/uninstall-printing.sh`. Run it with `sudo /bin/zsh`.
+The Scan app is separate and can be moved to Trash through Finder.
+
 ## Scope
 
 - 600 × 600 dpi, monochrome, plain paper, simplex.
@@ -174,3 +201,12 @@ GPL-2.0-or-later; see [LICENSE](LICENSE) and [THIRD_PARTY.md](THIRD_PARTY.md).
 Keep the corresponding source and license notices with any distribution.
 The original repository bootstrap's Apache 2.0 license text is retained in
 [licenses/Apache-2.0.txt](licenses/Apache-2.0.txt) for provenance.
+
+## Build a release
+
+On Apple Silicon, run `/bin/zsh scripts/build-release.sh`. This builds the combined
+`.pkg` and scanner-only ZIP in `output/releases/<version>/`, targeting macOS 13.
+Run `python3 tests/verify_release.py` to inspect the installer payload, signatures,
+deployment targets and scanner ZIP before publishing. The release must also include
+a corresponding source archive from the exact tagged commit and SHA-256 checksums.
+Read [RELEASE_NOTES.md](RELEASE_NOTES.md) for user installation instructions and limitations.

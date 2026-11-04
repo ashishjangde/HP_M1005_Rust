@@ -1,0 +1,11 @@
+#!/bin/zsh
+set -euo pipefail
+[[ "${3:-/}" == "/" ]] || { print -u2 "Install on the running macOS system volume."; exit 1; }
+[[ "$(/usr/bin/uname -m)" == "arm64" ]] || { print -u2 "This release requires an Apple Silicon Mac."; exit 1; }
+MAJOR="$(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 1)"
+(( MAJOR >= 13 )) || { print -u2 "This release requires macOS 13 or later."; exit 1; }
+APP="/Applications/HP M1005 Scan.app"
+if [[ -e "$APP" ]]; then
+  ID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Contents/Info.plist" 2>/dev/null || true)"
+  [[ "$ID" == "local.m1005rust.scan" ]] || { print -u2 "An unrelated application already uses the HP M1005 Scan name."; exit 1; }
+fi

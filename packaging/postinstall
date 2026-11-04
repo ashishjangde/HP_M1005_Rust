@@ -1,0 +1,10 @@
+#!/bin/zsh
+set -euo pipefail
+/usr/bin/codesign --verify --deep '/Applications/HP M1005 Scan.app'
+/usr/bin/codesign --verify /Library/Printers/M1005Rust/filter/rastertom1005
+/usr/bin/cupstestppd /Library/Printers/M1005Rust/ppd/HP-M1005-Rust.ppd
+# A disconnected printer must not turn a valid software install into a failure.
+if ! /bin/zsh /Library/Printers/M1005Rust/configure-printer.sh; then
+  print "Software installed. Printer setup could not complete; reconnect the powered-on M1005 and add it in Printers & Scanners."
+fi
+exit 0
