@@ -61,7 +61,7 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let stack = NSStackView()
         stack.orientation = .vertical
         stack.alignment = .leading
-        stack.spacing = 12
+        stack.spacing = 8
         stack.translatesAutoresizingMaskIntoConstraints = false
         window.contentView!.addSubview(stack)
         NSLayoutConstraint.activate([
@@ -102,6 +102,21 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         stack.addArrangedSubview(grid)
         stack.addArrangedSubview(searchable)
 
+        let scanActions = NSStackView()
+        scanActions.orientation = .horizontal
+        scanActions.alignment = .centerY
+        scanActions.spacing = 8
+        for button in [scanButton, cancelButton] {
+            button.target = self
+            button.bezelStyle = .rounded
+            scanActions.addArrangedSubview(button)
+        }
+        scanButton.action = #selector(scan)
+        scanButton.keyEquivalent = "\r"
+        scanButton.controlSize = .large
+        cancelButton.action = #selector(cancel)
+        stack.addArrangedSubview(scanActions)
+
         let progressRow = NSStackView()
         progressRow.orientation = .horizontal
         progressRow.spacing = 10
@@ -121,8 +136,7 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         preview.layer?.cornerRadius = 8
         preview.layer?.borderWidth = 1
         preview.layer?.borderColor = NSColor.separatorColor.cgColor
-        preview.heightAnchor.constraint(greaterThanOrEqualToConstant: 300).isActive = true
-        preview.heightAnchor.constraint(lessThanOrEqualToConstant: 390).isActive = true
+        preview.heightAnchor.constraint(equalToConstant: 240).isActive = true
         preview.widthAnchor.constraint(equalTo: stack.widthAnchor).isActive = true
         preview.onSelectionChanged = { [weak self] rect in self?.cropButton.isEnabled = !rect.isEmpty && self?.currentImage != nil }
         stack.addArrangedSubview(preview)
@@ -142,15 +156,14 @@ final class ScanApp: NSObject, NSApplicationDelegate, NSWindowDelegate {
         stack.addArrangedSubview(editRow)
 
         let actions = NSStackView()
+        actions.orientation = .horizontal
+        actions.alignment = .centerY
         actions.spacing = 8
-        for button in [scanButton, cancelButton, addPageButton, finishPDFButton, savePNGButton] {
+        for button in [addPageButton, finishPDFButton, savePNGButton] {
             button.target = self
             button.bezelStyle = .rounded
             actions.addArrangedSubview(button)
         }
-        scanButton.action = #selector(scan)
-        scanButton.keyEquivalent = "\r"
-        cancelButton.action = #selector(cancel)
         addPageButton.action = #selector(addPageAndContinue)
         finishPDFButton.action = #selector(finishPDF)
         savePNGButton.action = #selector(savePNG)

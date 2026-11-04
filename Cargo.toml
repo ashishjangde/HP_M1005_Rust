@@ -1,6 +1,6 @@
 [package]
 name = "m1005"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2024"
 license = "GPL-2.0-or-later"
 description = "Native macOS HP LaserJet M1005 printing and scanning"
