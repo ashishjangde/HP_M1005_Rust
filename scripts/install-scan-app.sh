@@ -8,9 +8,11 @@ DEST="/Applications/HP M1005 Scan.app"
 if [[ -e "$DEST" ]]; then
   BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$DEST/Contents/Info.plist")"
   [[ "$BUNDLE_ID" == "local.m1005rust.scan" ]] || { print -u2 "An unrelated app already uses this name."; exit 1; }
+  /bin/rm -rf "$DEST"
 fi
 /usr/bin/ditto "$SOURCE" "$DEST"
 /usr/sbin/chown -R root:wheel "$DEST"
 /bin/chmod -R go-w "$DEST"
 /usr/bin/codesign --verify --deep "$DEST"
+/bin/rm -rf "$SOURCE"
 print "Installed /Applications/HP M1005 Scan.app"

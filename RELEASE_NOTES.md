@@ -1,21 +1,21 @@
-# v0.3.0 — HP M1005 Print & Scan for Apple Silicon
+# v0.3.1 — HP M1005 Scan app polish
 
-Download **HP_M1005_Rust-0.3.0-macos-arm64.pkg** for the printer driver and scanner
-app. It installs the CUPS print filter and **HP M1005 Scan.app**. Rust, Xcode and
-Homebrew are not required to use the release.
+This update fixes the app bundle's launch entry point, removes stale prior scanner
+executables during updates, hides the developer build copy from Spotlight indexing,
+and adds a custom high-resolution scanner icon. It includes all v0.3.0 scan features.
 
-## Scanner improvements
+## Scanner features
 
-- Scan a sequence of pages and save them together as a multi-page PDF.
-- Preview each page before saving; drag over the page to crop.
-- Rotate pages left or right, reset edits, or automatically deskew using detected text lines.
-- Optionally add a local macOS Vision OCR text layer so PDF text can be selected and searched.
-- Document, Photo and Grayscale presets for common scan settings.
-- Scan percentage, page/PDF progress, cancellation and clearer USB/scanner error guidance.
-- PNG and searchable or image-only PDF output.
+- Multi-page PDF assembly by scanning one page at a time.
+- Page preview, drag-to-crop, left/right rotation, reset edits and automatic text-line deskew.
+- Optional local macOS Vision OCR text layer for searchable PDFs.
+- Document, Photo and Grayscale presets.
+- Scan percentage, PDF progress, cancel and clearer USB/scanner error guidance.
+- PNG or searchable/image-only PDF output.
 
-Place pages individually on the scanner glass. The scanner app does not depend on an
-automatic document feeder. OCR runs locally on the Mac; images are not uploaded.
+The scanner app installs as a single **HP M1005 Scan** application. The build copy
+is kept out of Spotlight indexing to avoid showing duplicate app entries. Place each
+page individually on the glass; an automatic document feeder is not required.
 
 ## Install
 
@@ -24,23 +24,21 @@ automatic document feeder. OCR runs locally on the Mac; images are not uploaded.
 3. Print with **HP LaserJet M1005 (Rust)**.
 4. Open **HP M1005 Scan** from Applications or Spotlight.
 
-These Apple Silicon binaries target macOS 13 and later. They are unsigned and
-notarization is not included. If Gatekeeper blocks an app you trust, use the
-per-app approval flow in **System Settings → Privacy & Security → Open Anyway**.
+Apple Silicon only; macOS 13 or later. The package and app are unsigned and not
+notarized. If Gatekeeper blocks an app you trust, approve that app under
+**System Settings → Privacy & Security → Open Anyway**.
 
 ## Downloads
 
-- `HP_M1005_Rust-0.3.0-macos-arm64.pkg`: printer driver and scanner app installer.
-- `HP_M1005_Scan-0.3.0-macos-arm64.zip`: scanner app by itself.
-- `HP_M1005_Rust-0.3.0-source.tar.gz`: source from the matching release tag.
+- `HP_M1005_Rust-0.3.1-macos-arm64.pkg`: printer driver and scanner app installer.
+- `HP_M1005_Scan-0.3.1-macos-arm64.zip`: scanner app by itself.
+- `HP_M1005_Rust-0.3.1-source.tar.gz`: source from the matching release tag.
 - `SHA256SUMS.txt`: SHA-256 checksums for the release downloads.
 
-This release was built and the app compiled on Apple Silicon. The scanner transport
-was physically verified in v0.2.0; the new crop, deskew, OCR and multi-page PDF
-workflow in v0.3.0 has not yet been physically exercised on the M1005. Existing
-single-page printing and scanning behavior is unchanged. This is an independent
-community driver, not HP-supported software.
+The app and installer build successfully on Apple Silicon. The original scanner
+transport was physically verified in v0.2.0; crop, deskew, OCR and multi-page PDF
+features have not yet been physically exercised on the M1005. This independent
+community driver is not HP-supported software.
 
-GPL-2.0-or-later. Keep the corresponding source and license notices with any
-redistribution. See [README.md](README.md) for architecture, build and removal
-instructions.
+GPL-2.0-or-later. Keep corresponding source and license notices with any
+redistribution. See [README.md](README.md) for build and removal instructions.

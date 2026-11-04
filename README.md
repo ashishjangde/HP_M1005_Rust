@@ -3,7 +3,7 @@
 ## Download and use
 
 **Apple Silicon Mac (M-series), macOS 13 or later.** Download the ready-made
-[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.0/HP_M1005_Rust-0.3.0-macos-arm64.pkg)
+[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.1/HP_M1005_Rust-0.3.1-macos-arm64.pkg)
 or visit the [latest release](https://github.com/ashishjangde/HP_M1005_Rust/releases/latest).
 You do not need Rust, Xcode or Homebrew to use the download.
 
@@ -58,6 +58,7 @@ crop, rotate or auto-deskew it, then save as PNG or PDF. For multi-page PDFs, cl
 - Scan and PDF progress, cancellation, and actionable USB/scanner error messages.
 - Cancel drains the active USB scan so the scanner can return home before releasing it.
 - Existing files are preserved; choose a new filename for each output.
+- The app has one installed bundle and a custom high-resolution M1005 Scan icon.
 - The app is a separate scanner frontend. It does not register an Image Capture/ICA
   driver or add a Scan tab to macOS Printers & Scanners.
 

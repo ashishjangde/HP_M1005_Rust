@@ -1,6 +1,10 @@
 #!/bin/zsh
 set -euo pipefail
-/usr/bin/codesign --verify --deep '/Applications/HP M1005 Scan.app'
+APP='/Applications/HP M1005 Scan.app'
+if [[ -d "$APP" ]] && [[ "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Contents/Info.plist")" == 'local.m1005rust.scan' ]]; then
+  /bin/rm -f "$APP/Contents/MacOS/HP M1005 Scan"
+fi
+/usr/bin/codesign --verify --deep "$APP"
 /usr/bin/codesign --verify /Library/Printers/M1005Rust/filter/rastertom1005
 /usr/bin/cupstestppd /Library/Printers/M1005Rust/ppd/HP-M1005-Rust.ppd
 # A disconnected printer must not turn a valid software install into a failure.

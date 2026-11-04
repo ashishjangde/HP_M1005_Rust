@@ -1,5 +1,6 @@
 /target/
 /output/
+macos/Assets.xcassets/AppIcon.appiconset/icon_*.png
 .DS_Store
 __pycache__/
 *.pyc
