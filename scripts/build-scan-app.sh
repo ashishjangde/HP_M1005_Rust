@@ -11,8 +11,9 @@ cp "$ROOT/target/release/m1005" "$APP/Contents/Resources/m1005"
 cp "$ROOT/LICENSE" "$APP/Contents/Resources/LICENSE"
 cp "$ROOT/THIRD_PARTY.md" "$APP/Contents/Resources/THIRD_PARTY.md"
 xcrun swiftc -O -target "$(uname -m)-apple-macosx13.0" -module-cache-path "$ROOT/output/swift-cache" \
-  -framework AppKit -framework UniformTypeIdentifiers \
-  "$ROOT/macos/ScanApp.swift" -o "$APP/Contents/MacOS/HP M1005 Scan"
+  -framework AppKit -framework UniformTypeIdentifiers -framework Vision -framework CoreImage -framework CoreText -framework ImageIO \
+  "$ROOT/macos/ScanApp.swift" "$ROOT/macos/CropPreviewView.swift" "$ROOT/macos/ScanDocument.swift" "$ROOT/macos/main.swift" \
+  -o "$APP/Contents/MacOS/HP M1005 Scan"
 /usr/bin/codesign --force --sign - "$APP/Contents/Resources/m1005"
 /usr/bin/codesign --force --sign - "$APP"
 print "Built $APP"

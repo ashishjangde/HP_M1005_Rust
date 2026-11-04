@@ -1,46 +1,46 @@
-# v0.2.0 — HP M1005 printing and scanning for Apple Silicon
+# v0.3.0 — HP M1005 Print & Scan for Apple Silicon
 
-Download **HP_M1005_Rust-0.2.0-macos-arm64.pkg** for the complete setup. It installs
-the printer driver and the HP M1005 Scan app. Rust, Xcode, Homebrew, Ghostscript
-and Rosetta are not required to use the downloads.
+Download **HP_M1005_Rust-0.3.0-macos-arm64.pkg** for the printer driver and scanner
+app. It installs the CUPS print filter and **HP M1005 Scan.app**. Rust, Xcode and
+Homebrew are not required to use the release.
 
-## Install and use
+## Scanner improvements
 
-1. Connect the HP LaserJet M1005 MFP by USB and turn it on.
-2. Open the `.pkg` installer and finish the installation using your Mac administrator password.
-3. Print from any app with **Command-P → HP LaserJet M1005 (Rust)**.
-4. Open **HP M1005 Scan** from Applications or Spotlight to save scans as PNG or PDF.
+- Scan a sequence of pages and save them together as a multi-page PDF.
+- Preview each page before saving; drag over the page to crop.
+- Rotate pages left or right, reset edits, or automatically deskew using detected text lines.
+- Optionally add a local macOS Vision OCR text layer so PDF text can be selected and searched.
+- Document, Photo and Grayscale presets for common scan settings.
+- Scan percentage, page/PDF progress, cancellation and clearer USB/scanner error guidance.
+- PNG and searchable or image-only PDF output.
 
-If the printer was disconnected during installation, add it through System Settings
-→ Printers & Scanners → Add Printer. Select the M1005, then select **HP LaserJet M1005
-- Native Rust** under **Use → Select Software**.
+Place pages individually on the scanner glass. The scanner app does not depend on an
+automatic document feeder. OCR runs locally on the Mac; images are not uploaded.
 
-## macOS security prompt
+## Install
 
-This community release is **unsigned and not notarized by Apple**. The app binaries
-have local ad-hoc signatures, which do not establish a verified developer identity.
-If macOS blocks the downloaded installer or app, first try opening it, then use
-**System Settings → Privacy & Security → Open Anyway** for that specific download
-if you choose to trust it. See [Apple's instructions](https://support.apple.com/en-gb/102445).
-Keep normal macOS security settings enabled.
+1. Connect and power on the M1005 over USB.
+2. Open the `.pkg` and finish the macOS installer.
+3. Print with **HP LaserJet M1005 (Rust)**.
+4. Open **HP M1005 Scan** from Applications or Spotlight.
 
-## Included downloads
+These Apple Silicon binaries target macOS 13 and later. They are unsigned and
+notarization is not included. If Gatekeeper blocks an app you trust, use the
+per-app approval flow in **System Settings → Privacy & Security → Open Anyway**.
 
-- `HP_M1005_Rust-0.2.0-macos-arm64.pkg`: combined printer and scanner installer.
-- `HP_M1005_Scan-0.2.0-macos-arm64.zip`: scanner app only; unzip and move the app to Applications.
-- `HP_M1005_Rust-0.2.0-source.tar.gz`: corresponding GPL source for these binaries.
-- `SHA256SUMS.txt`: SHA-256 checksums for the downloadable files.
+## Downloads
 
-## Compatibility and verified behavior
+- `HP_M1005_Rust-0.3.0-macos-arm64.pkg`: printer driver and scanner app installer.
+- `HP_M1005_Scan-0.3.0-macos-arm64.zip`: scanner app by itself.
+- `HP_M1005_Rust-0.3.0-source.tar.gz`: source from the matching release tag.
+- `SHA256SUMS.txt`: SHA-256 checksums for the release downloads.
 
-- **Apple Silicon only** (M-series Macs). The binaries target **macOS 13 or later**;
-  hardware verification was on **macOS 27.0.1**. Earlier versions have not been hardware-tested.
-- HP LaserJet M1005 MFP over USB; other HP models are not supported by this release.
-- Printing: monochrome 600 dpi, A4 physically verified. Letter, Legal and A5 have pipeline tests.
-- Scanning: A4 flatbed, color or grayscale, PNG or single-page PDF, optional 180° rotation.
-- 150 dpi color/PNG and 300 dpi grayscale/PDF were physically verified. The app offers 75–600 dpi.
-- Scanning uses the included app; it does not add an Image Capture/ICA driver or a system Scan tab.
-- No network/AirPrint serving, OCR, multi-page PDF assembly or automatic document feeder support.
+This release was built and the app compiled on Apple Silicon. The scanner transport
+was physically verified in v0.2.0; the new crop, deskew, OCR and multi-page PDF
+workflow in v0.3.0 has not yet been physically exercised on the M1005. Existing
+single-page printing and scanning behavior is unchanged. This is an independent
+community driver, not HP-supported software.
 
-The source is **GPL-2.0-or-later**. Original third-party notices are included in the
-source archive and installed driver. This is an independent project, not an official HP driver.
+GPL-2.0-or-later. Keep the corresponding source and license notices with any
+redistribution. See [README.md](README.md) for architecture, build and removal
+instructions.

@@ -3,7 +3,7 @@
 ## Download and use
 
 **Apple Silicon Mac (M-series), macOS 13 or later.** Download the ready-made
-[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.2.0/HP_M1005_Rust-0.2.0-macos-arm64.pkg)
+[Print & Scan installer](https://github.com/ashishjangde/HP_M1005_Rust/releases/download/v0.3.0/HP_M1005_Rust-0.3.0-macos-arm64.pkg)
 or visit the [latest release](https://github.com/ashishjangde/HP_M1005_Rust/releases/latest).
 You do not need Rust, Xcode or Homebrew to use the download.
 
@@ -29,8 +29,7 @@ are C. Everything compiles natively for Apple Silicon, with no Rosetta, Ghostscr
 Homebrew runtime, HP archived driver package, background service or kernel extension.
 This is an independent project, not an HP-supported driver.
 
-The scanner protocol, USB session, planar image assembly and rotation are Rust.
-A small native bridge supplies macOS USB access and PNG/PDF export. The included
+The scanner protocol, USB session and planar image assembly are Rust. A small native bridge supplies macOS USB access and image export. The included
 **HP M1005 Scan** app uses standard macOS controls and the same native scanner binary.
 
 **Hardware verified on 2026-11-04:** a PDF printed correctly on an HP LaserJet M1005
@@ -46,16 +45,19 @@ the Mac app as well. Other offered resolutions have not been physically verified
 
 ## Scan from the Mac app
 
-Open **HP M1005 Scan** from Applications or Spotlight. Place a page face-down on
-the glass, close the lid, choose resolution and color mode, then click **Scan…**.
-Choose a new filename in the save dialog. The completed scan opens in your default
-PDF/image viewer; **Open Scan** and **Show in Finder** remain available in the app.
+Open **HP M1005 Scan** from Applications or Spotlight. Choose a preset, place the
+page face-down on the glass and click **Scan…**. Preview each page, drag to select a
+crop, rotate or auto-deskew it, then save as PNG or PDF. For multi-page PDFs, click
+**Add Page & Scan Next** for each page and **Finish & Save PDF** when done.
 
-- A4 flatbed; grayscale or color; PNG or single-page PDF.
-- Resolution choices: 75, 100, 150, 200, 300 and 600 dpi. Default: 300 dpi grayscale PDF.
-- Optional 180-degree rotation for a page placed upside down.
+- A4 flatbed; grayscale or color; PNG or multi-page PDF.
+- Resolution choices: 75, 100, 150, 200, 300 and 600 dpi. Document and Grayscale
+  presets use 300 dpi grayscale PDF; Photo uses 600 dpi color PNG.
+- Optional local macOS Vision OCR adds a searchable text layer to PDFs.
+- Preview, drag-to-crop, left/right rotation, reset-edits and text-line auto-deskew.
+- Scan and PDF progress, cancellation, and actionable USB/scanner error messages.
 - Cancel drains the active USB scan so the scanner can return home before releasing it.
-- Existing files are preserved; choose a new filename for each scan.
+- Existing files are preserved; choose a new filename for each output.
 - The app is a separate scanner frontend. It does not register an Image Capture/ICA
   driver or add a Scan tab to macOS Printers & Scanners.
 
@@ -70,7 +72,7 @@ Installation copies only this app bundle into `/Applications/HP M1005 Scan.app`.
 Normal scanning requires no administrator password. Remove the Scan app through
 Finder if you no longer need it; printing has a separate installer/uninstaller.
 
-Command-line scanning is also available:
+Command-line single-page scanning is also available:
 
 ```sh
 target/release/m1005 scan-probe
@@ -154,8 +156,9 @@ links only macOS system libraries; JBIG is statically linked.
 bounded packet parsing, RGB-plane reconstruction, padded-row removal, clean
 cancellation, rotation and atomic output publication without replacing existing files.
 `native/scanner.c` opens only scanner interface 0 using IOKit; printing remains on its
-separate macOS USB backend. CoreGraphics and ImageIO export the final image without
-external converters. `macos/ScanApp.swift` is the AppKit frontend.
+separate macOS USB backend. The AppKit frontend uses Vision for local OCR and text-line
+deskew, Core Image for image transforms, and CoreGraphics/ImageIO for PNG and searchable
+multi-page PDF export.
 
 ## Verification
 
