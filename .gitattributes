@@ -1,0 +1,2 @@
+# Preserve the vendored upstream codec without whitespace-only rewrites.
+vendor/jbig/* -whitespace

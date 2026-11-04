@@ -1,0 +1,12 @@
+[package]
+name = "m1005"
+version = "0.2.0"
+edition = "2024"
+license = "GPL-2.0-or-later"
+description = "Native macOS HP LaserJet M1005 printing and scanning"
+build = "build.rs"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
